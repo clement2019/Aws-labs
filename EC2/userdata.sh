@@ -1,6 +1,6 @@
 
 #!/bin/bash
-apt update
+ apt update
 apt install -y apache2
 
 # Get the private IP address of the EC2 instance
@@ -66,7 +66,7 @@ cat <<EOF > /var/www/html/index.html
 <div class="container">
     <h1>Welcome to Your Cloud Computing Training</h1>
     <h2>Aws Loadbalancer and Auto scaling Group Demo</h2>
-    <h3>Server1 connecting .......</h3>
+    <h3>Server 1 connecting .......</h3>
     <p>This is a beautifully colored HTML landing page for your AWS tutorial series. Enhanced with modern CSS styling for a more attractive and engaging user experience.</p>
     <h2 class="ip-address">Here is the IP Address of this instance: $IP_ADDRESS</h2>
     <p>This is the best AWS EC2 Tutorial series on the internet; Yes or No?</p>
@@ -80,5 +80,5 @@ cat <<EOF > /var/www/html/index.html
 </html>
 EOF
 
-systemctl start apache2
-systemctl enable apache2
+ systemctl start apache2
+ systemctl enable apache2

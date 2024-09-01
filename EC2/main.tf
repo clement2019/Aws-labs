@@ -1,8 +1,4 @@
 
-provider "aws" {
-  region = "eu-west-2"
-}
-
 # VPC
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
@@ -75,33 +71,6 @@ resource "aws_route_table_association" "private_assoc" {
   route_table_id = aws_route_table.private_route_table.id
 }
 
-# Security Group
-resource "aws_security_group" "allow_web" {
-  name        = "allow_web_traffic"
-  description = "Allow web inbound traffic"
-  vpc_id      = aws_vpc.main.id
-
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
 
 # IAM Role
 # (IAM Role and Policy Attachment resources here...)
@@ -112,9 +81,9 @@ resource "aws_instance" "web_public" {
   instance_type          = "t2.micro"
   subnet_id              = aws_subnet.public_subnet.id
   associate_public_ip_address = true
-  user_data              = file("user-data.sh")
+  user_data              = file("userdata.sh")
   vpc_security_group_ids = [aws_security_group.allow_web.id]
-  key_name               = "my-server-Series-Public-EC2-KP"
+  key_name               = "devopskey"
   tags = {
     Name = "my-server-Public-Instance2"
   }
@@ -126,7 +95,7 @@ resource "aws_instance" "web_private" {
   instance_type          = "t2.micro"
   subnet_id              = aws_subnet.private_subnet.id
   vpc_security_group_ids = [aws_security_group.allow_web.id]
-  key_name               = "primuslearning-Series-Public-EC2-KP"
+  key_name               = "devopskey"
   tags = {
     Name = "my-server-Private-Instance2"
   }

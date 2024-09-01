@@ -1,0 +1,62 @@
+pipeline {
+  agent any
+  
+   tools {nodejs "node"}
+    
+  stages {
+    stage("GitHub git cloning") {
+            steps {
+                script {
+                    checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'GITHUB_CREDENTIAL', url: '<enter your git url>']])
+                   
+                }
+            }
+        }
+     
+    stage('starting npm installation.......') {
+      steps {
+        sh 'npm install'
+      }
+    }
+  
+     stage('Build Docker Image for the app') {
+            steps {
+                script {
+                 
+                  sh 'printenv'
+                  sh 'git version'
+                 
+                  sh 'docker build -t good777lord/node-app5.0 .'
+                }
+            }
+        }
+
+
+        stage('Docker Image deployment to DockerHub') {
+            steps {
+                script {
+                  
+                 withCredentials([string(credentialsId: 'DOCKERID', variable: 'DOCKERID')]) {
+                    sh 'docker login -u good777lord -p ${DOCKERID}'
+            }
+           
+            sh 'docker push good777lord/node-app5.0:latest'
+        }
+            }   
+        }
+        stage('Deploying Node App to Kubernetes') {
+          steps {
+            script {
+              sh ('aws eks update-kubeconfig --name eks-cluster-209 --region eu-west-2')
+              sh "kubectl get ns"
+              sh "kubectl apply -f deployment.yaml"
+        }
+      }
+    }
+
+  }
+}
+         
+     
+
+  

@@ -61,7 +61,7 @@ resource "aws_route_table" "private_route_table" {
   }
 }
 
-# (NAT Gateway and Elastic IP resources here...)
+# (NAT Gateway and Elastic IP resources here...biut left now)
 
 # Associate Public Route Table with Public Subnet
 resource "aws_route_table_association" "public_assoc" {
