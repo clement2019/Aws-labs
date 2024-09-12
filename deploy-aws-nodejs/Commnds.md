@@ -75,9 +75,7 @@ https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html
 
 6. ## Create EKS cluster
 
-eksctl create cluster --name eks-cluster-201 --node-type t3.medium --nodes 1 --nodes-min 
-
-1 --nodes-max 2 --region eu-north-1
+eksctl create cluster --name eks-cluster-201 --node-type t3.medium --nodes 2 --nodes-min 2 --nodes-max 2 --region eu-west-2
 
 ## Get cluster now
 
@@ -85,7 +83,7 @@ eksctl get cluster
 
 ## Get EKS Cluster service
 
-eksctl get cluster --name eks-cluster-201 --region eu-north-1
+eksctl get cluster --name eks-cluster-201 --region eu-west-2
 
 ## Get EKS Pod data.
 
@@ -107,10 +105,10 @@ kubectl get svcsx
 
 7. ## Delete EKS cluster
 
-eksctl delete cluster --name eks-cluster-201 --region eu-north-1
+eksctl delete cluster --name eks-cluster-201 --region eu-west-2
 
 ##or 
 
-eksctl delete cluster --region=eu-north-1 --name=eks-cluster-201
+eksctl delete cluster --region=eu-west-2 --name=eks-cluster-201
 
 
